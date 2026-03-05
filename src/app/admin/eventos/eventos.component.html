@@ -1,0 +1,390 @@
+<!-- ========================================= -->
+<!--       LISTADO DE EVENTOS (PREMIUM)        -->
+<!-- ========================================= -->
+
+<div class="p-6 space-y-10">
+  <div class="flex justify-between items-center">
+    <h1 class="title-premium">Eventos</h1>
+
+    <button (click)="mostrarFormulario = true" class="btn-premium btn-blue">
+      + Nuevo Evento
+    </button>
+  </div>
+
+  <!-- TABLA PREMIUM -->
+  <div class="card overflow-hidden">
+    <table class="min-w-full text-sm table-premium">
+      <thead>
+        <tr>
+          <th class="p-3 text-left">Contrato</th>
+          <th class="p-3 text-left">Cliente</th>
+          <th class="p-3 text-left">Fecha</th>
+          <th class="p-3 text-left">Total</th>
+          <th class="p-3 text-center">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let e of eventos">
+          <td class="p-3 font-semibold">{{ e.numero_contrato }}</td>
+          <td class="p-3">{{ e.nombre_contratante }}</td>
+          <td class="p-3">{{ e.fecha_evento }}</td>
+          <td class="p-3 font-semibold text-green-700">${{ e.total }}</td>
+
+          <td class="p-3 text-center">
+            <button
+              (click)="generarContrato(e.id_evento)"
+              class="btn-premium btn-green px-3 py-1 text-xs"
+            >
+              PDF
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ========================================= -->
+<!--      FORMULARIO NUEVO EVENTO PREMIUM      -->
+<!-- ========================================= -->
+
+<div *ngIf="mostrarFormulario" class="p-6 space-y-10">
+  <h1 class="title-premium">Nuevo Evento</h1>
+
+  <!-- DATOS DEL CLIENTE -->
+  <div class="card space-y-6">
+    <h2 class="subtitle-premium">Datos del Cliente</h2>
+
+    <div class="grid grid-cols-2 gap-6">
+      <div>
+        <label class="text-gray-700 font-medium">Nombre del contratante</label>
+        <input
+          type="text"
+          class="input-premium"
+          [(ngModel)]="evento.nombre_contratante"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Teléfono 1</label>
+        <input
+          type="text"
+          class="input-premium"
+          [(ngModel)]="evento.telefono1"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Teléfono 2</label>
+        <input
+          type="text"
+          class="input-premium"
+          [(ngModel)]="evento.telefono2"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Correo electrónico</label>
+        <input type="email" class="input-premium" [(ngModel)]="evento.email" />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Empresa</label>
+        <input type="text" class="input-premium" [(ngModel)]="evento.empresa" />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">RFC</label>
+        <input type="text" class="input-premium" [(ngModel)]="evento.rfc" />
+      </div>
+
+      <div class="col-span-2">
+        <label class="text-gray-700 font-medium">Dirección fiscal</label>
+        <input
+          type="text"
+          class="input-premium"
+          [(ngModel)]="evento.direccion_fiscal"
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS DEL EVENTO -->
+  <div class="card space-y-6">
+    <h2 class="subtitle-premium">Datos del Evento</h2>
+
+    <div class="grid grid-cols-3 gap-6">
+      <div>
+        <label class="text-gray-700 font-medium">Fecha del evento</label>
+        <input
+          type="date"
+          class="input-premium"
+          [(ngModel)]="evento.fecha_evento"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Nombre del evento</label>
+        <input
+          type="text"
+          class="input-premium"
+          [(ngModel)]="evento.nombre_evento"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Salón</label>
+        <select class="input-premium" [(ngModel)]="evento.id_salon">
+          <option value="">Seleccione salón</option>
+          <option *ngFor="let salon of salones" [value]="salon.id_salon">
+            {{ salon.nombre }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Hora inicio</label>
+        <input
+          type="time"
+          class="input-premium"
+          [(ngModel)]="evento.hora_inicio"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Hora fin</label>
+        <input
+          type="time"
+          class="input-premium"
+          [(ngModel)]="evento.hora_fin"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Duración (horas)</label>
+        <input
+          type="number"
+          class="input-premium"
+          [(ngModel)]="evento.duracion_horas"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Número de personas</label>
+        <input
+          type="number"
+          class="input-premium"
+          [(ngModel)]="evento.numero_personas"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium"
+          >Precio persona adicional</label
+        >
+        <input
+          type="number"
+          class="input-premium"
+          [(ngModel)]="evento.precio_persona_adicional"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">% Anticipo</label>
+        <input
+          type="number"
+          class="input-premium"
+          [(ngModel)]="evento.porcentaje_anticipo"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Fecha pago anticipo</label>
+        <input
+          type="date"
+          class="input-premium"
+          [(ngModel)]="evento.fecha_pago_anticipo"
+        />
+      </div>
+
+      <div>
+        <label class="text-gray-700 font-medium">Método de pago</label>
+        <select class="input-premium" [(ngModel)]="evento.metodo_pago">
+          <option value="">Seleccione método</option>
+          <option value="Transferencia">Transferencia</option>
+          <option value="Efectivo">Efectivo</option>
+          <option value="Tarjeta">Tarjeta</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICIOS PRINCIPALES -->
+  <div *ngFor="let servicio of serviciosDisponibles" class="border-b py-4">
+    <!-- Línea principal del servicio -->
+    <div class="flex justify-between items-center">
+      <div class="text-gray-700 flex items-center gap-3">
+        <input type="checkbox" [(ngModel)]="servicio.seleccionado" />
+        <span>{{ servicio.nombre }} - ${{ servicio.precio_unitario }}</span>
+      </div>
+
+      <input
+        *ngIf="servicio.seleccionado"
+        type="number"
+        class="input-premium w-24"
+        placeholder="Cantidad"
+        [(ngModel)]="servicio.cantidad_personas"
+      />
+    </div>
+
+    <!-- 🔥 SECCIONES DINÁMICAS (solo si está seleccionado) -->
+    <div
+      *ngIf="servicio.seleccionado && servicio.secciones?.length"
+      class="mt-4 ml-6 space-y-6 bg-gray-50 p-4 rounded-lg"
+    >
+      <div *ngFor="let seccion of servicio.secciones">
+        <!-- Título de sección -->
+        <h4 class="font-semibold text-gray-800 mb-2">
+          {{ seccion.titulo }}
+
+          <!-- Mostrar regla si es seleccionable -->
+          <span
+            *ngIf="seccion.tipo_seccion === 'SELECCION'"
+            class="text-xs text-blue-600 ml-2"
+          >
+            (Elegir {{ seccion.minimo_opciones }} opción(es))
+          </span>
+        </h4>
+
+        <!-- Items -->
+        <div class="grid grid-cols-2 gap-2">
+          <label
+            *ngFor="let item of seccion.items"
+            class="flex items-center gap-2 text-sm text-gray-700"
+          >
+            <input
+              type="checkbox"
+              [(ngModel)]="item.seleccionado"
+              [disabled]="seccion.tipo_seccion === 'FIJA'"
+            />
+
+            {{ item.nombre }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICIOS COMPLEMENTARIOS -->
+  <div class="card space-y-4">
+    <h2 class="subtitle-premium">Servicios Complementarios</h2>
+
+    <div class="grid grid-cols-2 gap-4 text-gray-700">
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          #chkAudiovisual
+          (change)="
+            evento.equipo_audiovisual = chkAudiovisual.checked ? 'A' : 'N/A'
+          "
+        />
+        Equipo Audiovisual
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          #chkDecoracion
+          (change)="evento.decoracion = chkDecoracion.checked ? 'A' : 'N/A'"
+        />
+        Decoración
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          #chkGuardarropa
+          (change)="evento.guardarropa = chkGuardarropa.checked ? 'A' : 'N/A'"
+        />
+        Guardarropa
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          #chkSalon
+          (change)="evento.uso_salon = chkSalon.checked ? 'A' : 'N/A'"
+        />
+        Uso Salón
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          #chkMobiliario
+          (change)="evento.uso_mobiliario = chkMobiliario.checked ? 'A' : 'N/A'"
+        />
+        Uso Mobiliario
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          #chkMeseros
+          (change)="evento.servicio_meseros = chkMeseros.checked ? 'A' : 'N/A'"
+        />
+        Servicio Meseros
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input
+          type="checkbox"
+          #chkEstacionamiento
+          (change)="
+            evento.uso_estacionamiento = chkEstacionamiento.checked
+              ? 'A'
+              : 'N/A'
+          "
+        />
+        Uso Estacionamiento
+      </label>
+    </div>
+
+    <div>
+      <label class="text-gray-700 font-medium">Otros servicios</label>
+      <input
+        type="text"
+        class="input-premium"
+        [(ngModel)]="evento.otros_servicios"
+      />
+    </div>
+  </div>
+
+  <!-- MONTAJE -->
+  <div class="card space-y-4">
+    <h2 class="subtitle-premium">Especificaciones del Montaje</h2>
+    <textarea
+      class="textarea-premium"
+      rows="3"
+      [(ngModel)]="evento.especificaciones_montaje"
+    ></textarea>
+  </div>
+
+  <!-- OBSERVACIONES -->
+  <div class="card space-y-4">
+    <h2 class="subtitle-premium">Observaciones</h2>
+    <textarea
+      class="textarea-premium"
+      rows="3"
+      [(ngModel)]="evento.observaciones"
+    ></textarea>
+  </div>
+
+  <!-- BOTÓN GUARDAR -->
+  <div class="text-right">
+    <button class="btn-premium btn-blue px-8 py-3" (click)="guardar()">
+      Guardar Evento
+    </button>
+  </div>
+</div>

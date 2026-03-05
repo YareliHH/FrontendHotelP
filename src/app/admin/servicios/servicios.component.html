@@ -1,0 +1,231 @@
+<div class="p-6 space-y-10">
+  <!-- TÍTULO -->
+  <h2 class="title-premium">Gestión de Servicios</h2>
+
+  <div class="card space-y-6">
+    <h3 class="subtitle-premium">
+      {{ editMode ? "Editar Servicio" : "Nuevo Servicio" }}
+    </h3>
+
+    <!-- ========================= -->
+    <!-- DATOS BÁSICOS DEL SERVICIO -->
+    <!-- ========================= -->
+
+    <div>
+      <label class="block text-gray-700 font-medium mb-1">
+        Nombre del Servicio
+      </label>
+      <input
+        type="text"
+        class="input-premium"
+        [(ngModel)]="servicioForm.nombre"
+        required
+      />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-medium mb-1"> Descripción </label>
+      <textarea
+        class="textarea-premium"
+        [(ngModel)]="servicioForm.descripcion"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-medium mb-1">
+        Precio Unitario (por persona)
+      </label>
+      <input
+        type="number"
+        class="input-premium"
+        [(ngModel)]="servicioForm.precio_unitario"
+        min="0"
+      />
+    </div>
+
+    <div>
+      <label class="block text-gray-700 font-medium mb-1">
+        Tipo de Servicio
+      </label>
+      <input
+        type="text"
+        class="input-premium"
+        [(ngModel)]="servicioForm.tipo"
+        placeholder="Ej: desayuno, comida, coffee break..."
+      />
+    </div>
+    <!-- ========================= -->
+    <!-- SECCIONES -->
+    <!-- ========================= -->
+
+    <hr class="my-6" />
+
+    <h3 class="subtitle-premium">Secciones del Servicio</h3>
+
+    <div *ngIf="!servicioForm.secciones?.length" class="text-gray-500 text-sm">
+      No hay secciones agregadas.
+    </div>
+
+    <div
+      *ngFor="let seccion of servicioForm.secciones; let i = index"
+      class="card mt-4 bg-gray-50 space-y-4"
+    >
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">
+          Título de la Sección
+        </label>
+        <input type="text" class="input-premium" [(ngModel)]="seccion.titulo" />
+      </div>
+
+      <div>
+        <label class="block text-gray-700 font-medium mb-1">
+          Tipo de Sección
+        </label>
+        <select class="input-premium" [(ngModel)]="seccion.tipo_seccion">
+          <option value="FIJA">Fija (Incluye automáticamente)</option>
+          <option value="SELECCION">Selección (Cliente elige)</option>
+        </select>
+      </div>
+
+      <div
+        *ngIf="seccion.tipo_seccion === 'SELECCION'"
+        class="grid grid-cols-2 gap-4"
+      >
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">
+            Mínimo de opciones
+          </label>
+          <input
+            type="number"
+            class="input-premium"
+            [(ngModel)]="seccion.minimo_opciones"
+            min="1"
+          />
+        </div>
+
+        <div>
+          <label class="block text-gray-700 font-medium mb-1">
+            Máximo de opciones
+          </label>
+          <input
+            type="number"
+            class="input-premium"
+            [(ngModel)]="seccion.maximo_opciones"
+            min="1"
+          />
+        </div>
+      </div>
+
+      <!-- ITEMS -->
+      <h4 class="font-semibold mt-4">Items de la Sección</h4>
+
+      <div
+        *ngFor="let item of seccion.items; let j = index"
+        class="flex gap-2 mt-2"
+      >
+        <input
+          type="text"
+          class="input-premium flex-1"
+          [(ngModel)]="item.nombre"
+          placeholder="Nombre del item"
+        />
+
+        <button
+          type="button"
+          (click)="eliminarItem(i, j)"
+          class="btn-premium btn-red px-3"
+        >
+          X
+        </button>
+      </div>
+
+      <div class="flex gap-3 mt-3">
+        <button
+          type="button"
+          (click)="agregarItem(i)"
+          class="btn-premium btn-blue text-sm"
+        >
+          + Agregar Item
+        </button>
+
+        <button
+          type="button"
+          (click)="eliminarSeccion(i)"
+          class="btn-premium btn-red text-sm"
+        >
+          Eliminar Sección
+        </button>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      (click)="agregarSeccion()"
+      class="btn-premium btn-blue mt-6"
+    >
+      + Agregar Sección
+    </button>
+  </div>
+
+  <div class="flex gap-3 pt-2">
+    <button
+      (click)="guardar()"
+      class="btn-premium btn-blue"
+      [disabled]="!servicioForm.nombre || servicioForm.precio_unitario < 0"
+    >
+      Guardar
+    </button>
+
+    <button (click)="resetForm()" class="btn-premium btn-gray">Cancelar</button>
+  </div>
+
+  <!-- ======================================== -->
+  <!-- TABLA -->
+  <!-- ======================================== -->
+
+  <div class="card overflow-hidden">
+    <table class="w-full text-sm table-premium">
+      <thead>
+        <tr>
+          <th class="p-3 text-left">Nombre</th>
+          <th class="p-3 text-left">Tipo</th>
+          <th class="p-3 text-left">Precio</th>
+          <th class="p-3 text-center">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let servicio of servicios">
+          <td class="p-3 font-semibold text-gray-800">
+            {{ servicio.nombre }}
+          </td>
+
+          <td class="p-3 text-gray-700">
+            {{ servicio.tipo }}
+          </td>
+
+          <td class="p-3 font-semibold text-green-700">
+            ${{ servicio.precio_unitario }}
+          </td>
+
+          <td class="p-3 text-center space-x-3">
+            <button
+              (click)="editar(servicio)"
+              class="btn-premium btn-yellow px-3 py-1 text-xs"
+            >
+              Editar
+            </button>
+
+            <button
+              (click)="eliminar(servicio.id_servicio!)"
+              class="btn-premium btn-red px-3 py-1 text-xs"
+            >
+              Desactivar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

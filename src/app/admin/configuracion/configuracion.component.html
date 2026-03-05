@@ -1,0 +1,114 @@
+<div class="space-y-6">
+
+  <!-- TÍTULO -->
+  <h1 class="text-3xl font-bold">Configuración</h1>
+
+  <!-- GRID PRINCIPAL -->
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+
+    <!-- PERFIL DEL USUARIO -->
+    <div class="bg-white p-6 rounded-xl shadow space-y-4">
+      <h2 class="text-lg font-semibold text-gray-700">Perfil del Usuario</h2>
+
+      <div class="space-y-4">
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Nombre</label>
+          <input type="text" placeholder="Ej: Ana López"
+            class="w-full p-3 bg-gray-50 rounded-lg border" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Correo</label>
+          <input type="email" placeholder="correo@hotel.com"
+            class="w-full p-3 bg-gray-50 rounded-lg border" />
+        </div>
+
+        <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
+          Guardar Cambios
+        </button>
+
+      </div>
+    </div>
+
+    <!-- PREFERENCIAS DEL SISTEMA -->
+    <div class="bg-white p-6 rounded-xl shadow space-y-4">
+      <h2 class="text-lg font-semibold text-gray-700">Preferencias del Sistema</h2>
+
+      <div class="space-y-4">
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Tema</label>
+          <select class="w-full p-3 bg-gray-50 rounded-lg border">
+            <option>Claro</option>
+            <option>Oscuro</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Idioma</label>
+          <select class="w-full p-3 bg-gray-50 rounded-lg border">
+            <option>Español</option>
+            <option>Inglés</option>
+          </select>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- NOTIFICACIONES -->
+    <div class="bg-white p-6 rounded-xl shadow space-y-4">
+      <h2 class="text-lg font-semibold text-gray-700">Notificaciones</h2>
+
+      <div class="space-y-4">
+
+        <label class="flex items-center space-x-3 cursor-pointer">
+          <input type="checkbox" class="w-4 h-4">
+          <span>Recibir alertas de nuevos eventos</span>
+        </label>
+
+        <label class="flex items-center space-x-3 cursor-pointer">
+          <input type="checkbox" class="w-4 h-4">
+          <span>Recordatorios automáticos</span>
+        </label>
+
+        <label class="flex items-center space-x-3 cursor-pointer">
+          <input type="checkbox" class="w-4 h-4">
+          <span>Notificaciones por correo</span>
+        </label>
+
+      </div>
+    </div>
+
+    <!-- SEGURIDAD -->
+    <div class="bg-white p-6 rounded-xl shadow space-y-4">
+      <h2 class="text-lg font-semibold text-gray-700">Seguridad</h2>
+
+      <div class="space-y-4">
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Contraseña Actual</label>
+          <input type="password" class="w-full p-3 bg-gray-50 rounded-lg border" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
+          <input type="password" class="w-full p-3 bg-gray-50 rounded-lg border" />
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Confirmar Contraseña</label>
+          <input type="password" class="w-full p-3 bg-gray-50 rounded-lg border" />
+        </div>
+
+        <button class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg">
+          Cambiar Contraseña
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

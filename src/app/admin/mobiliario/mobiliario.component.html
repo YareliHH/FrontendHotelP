@@ -1,0 +1,63 @@
+<div class="p-6">
+
+  <h2 class="text-2xl font-bold mb-6">Inventario de Mobiliario</h2>
+
+  <div class="bg-white shadow rounded-lg p-4">
+
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="border-b bg-gray-100">
+          <th class="p-3">Tipo</th>
+          <th class="p-3">Cantidad</th>
+          <th class="p-3 text-center">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of mobiliario" class="border-b hover:bg-gray-50">
+
+          <td class="p-3 font-semibold">
+            {{ item.tipo }}
+          </td>
+
+          <td class="p-3">
+            <div *ngIf="editandoId !== item.id">
+              {{ item.cantidad }}
+            </div>
+
+            <div *ngIf="editandoId === item.id">
+              <input type="number"
+                     [(ngModel)]="nuevaCantidad"
+                     class="border rounded px-2 py-1 w-24">
+            </div>
+          </td>
+
+          <td class="p-3 text-center">
+
+            <div *ngIf="editandoId !== item.id">
+              <button (click)="editar(item)"
+                      class="bg-blue-500 text-white px-3 py-1 rounded">
+                Editar
+              </button>
+            </div>
+
+            <div *ngIf="editandoId === item.id" class="space-x-2">
+              <button (click)="guardar(item.id)"
+                      class="bg-green-600 text-white px-3 py-1 rounded">
+                Guardar
+              </button>
+
+              <button (click)="cancelar()"
+                      class="bg-gray-500 text-white px-3 py-1 rounded">
+                Cancelar
+              </button>
+            </div>
+
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

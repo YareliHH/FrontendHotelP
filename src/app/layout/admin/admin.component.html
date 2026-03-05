@@ -1,0 +1,93 @@
+<div class="flex h-screen bg-slate-100">
+  <!-- Sidebar -->
+  <aside
+    [ngClass]="isCollapsed ? 'w-20 p-3' : 'w-64 p-5'"
+    class="bg-slate-900 text-white flex flex-col transition-all duration-300"
+  >
+    <div class="flex items-center justify-between">
+      <h2 *ngIf="!isCollapsed" class="text-lg font-semibold">Hotel Events</h2>
+
+      <button (click)="toggleSidebar()" class="text-white text-2xl">
+        <i
+          class="fa-solid"
+          [ngClass]="isCollapsed ? 'fa-bars' : 'fa-xmark'"
+        ></i>
+      </button>
+    </div>
+
+    <nav class="flex-1 space-y-2 mt-8">
+      <a
+        routerLink="/admin/dashboard"
+        routerLinkActive="bg-slate-700 text-white"
+        class="flex items-center rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
+        [ngClass]="isCollapsed ? 'justify-center p-3' : 'space-x-3 px-3 py-2'"
+      >
+        <i class="fa-solid fa-chart-column"></i>
+        <span *ngIf="!isCollapsed">Dashboard</span>
+      </a>
+
+      <a
+        routerLink="/admin/eventos"
+        routerLinkActive="bg-slate-700 text-white"
+        class="flex items-center text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-all"
+        [ngClass]="isCollapsed ? 'justify-center p-3' : 'space-x-3 px-3 py-2'"
+      >
+        <i class="fa-regular fa-calendar"></i>
+        <span *ngIf="!isCollapsed">Eventos</span>
+      </a>
+
+      <a
+        routerLink="/admin/salones"
+        routerLinkActive="bg-slate-700 text-white"
+        class="flex items-center text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-all"
+        [ngClass]="isCollapsed ? 'justify-center p-3' : 'space-x-3 px-3 py-2'"
+      >
+        <i class="fa-solid fa-house"></i>
+        <span *ngIf="!isCollapsed">Salones</span>
+      </a>
+      <a
+        routerLink="/admin/servicios"
+        routerLinkActive="bg-slate-700 text-white"
+        class="flex items-center text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-all"
+        [ngClass]="isCollapsed ? 'justify-center p-3' : 'space-x-3 px-3 py-2'"
+      >
+        <i class="fa-solid fa-house"></i>
+        <span *ngIf="!isCollapsed">Servicios</span>
+      </a>
+
+       <a
+        routerLink="/admin/mobiliario"
+        routerLinkActive="bg-slate-700 text-white"
+        class="flex items-center text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-all"
+        [ngClass]="isCollapsed ? 'justify-center p-3' : 'space-x-3 px-3 py-2'"
+      >
+        <i class="fa-solid fa-house"></i>
+        <span *ngIf="!isCollapsed">Mobiliario</span>
+      </a>
+
+      <a
+        routerLink="/admin/configuracion"
+        routerLinkActive="bg-slate-700 text-white"
+        class="flex items-center text-slate-300 hover:bg-slate-700 hover:text-white rounded-lg transition-all"
+        [ngClass]="isCollapsed ? 'justify-center p-3' : 'space-x-3 px-3 py-2'"
+      >
+        <i class="fa-solid fa-gear"></i>
+        <span *ngIf="!isCollapsed">Configuración</span>
+      </a>
+    </nav>
+
+    <div class="pt-4 border-t border-slate-700">
+      <button
+        (click)="logout()"
+        class="bg-red-500 text-white px-4 py-2 rounded"
+      >
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <!-- Contenido -->
+  <main class="flex-1 p-6 overflow-y-auto">
+    <router-outlet></router-outlet>
+  </main>
+</div>

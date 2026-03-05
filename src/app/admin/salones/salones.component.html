@@ -1,0 +1,109 @@
+<div class="p-6 space-y-10">
+
+  <!-- TÍTULO PRINCIPAL -->
+  <h2 class="title-premium">Gestión de Salones</h2>
+
+  <!-- =============================== -->
+  <!-- FORMULARIO PREMIUM -->
+  <!-- =============================== -->
+
+  <div class="card space-y-6">
+
+    <h3 class="subtitle-premium">
+      {{ editMode ? 'Editar Salón' : 'Nuevo Salón' }}
+    </h3>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- NOMBRE -->
+      <div>
+        <label class="text-gray-700 font-medium">Nombre del salón</label>
+        <input
+          type="text"
+          [(ngModel)]="salonForm.nombre"
+          placeholder="Ej: Salón Oro"
+          class="input-premium"
+        />
+      </div>
+
+      <!-- CAPACIDAD -->
+      <div>
+        <label class="text-gray-700 font-medium">Capacidad</label>
+        <input
+          type="number"
+          [(ngModel)]="salonForm.capacidad"
+          placeholder="Ej: 150"
+          class="input-premium"
+        />
+      </div>
+
+      <!-- DESCRIPCIÓN -->
+      <div class="md:col-span-2">
+        <label class="text-gray-700 font-medium">Descripción</label>
+        <textarea
+          [(ngModel)]="salonForm.descripcion"
+          rows="3"
+          placeholder="Agrega los detalles del salón..."
+          class="textarea-premium"
+        ></textarea>
+      </div>
+
+    </div>
+
+    <!-- BOTONES -->
+    <div class="flex gap-4 pt-2">
+      <button (click)="guardar()" class="btn-premium btn-blue">Guardar</button>
+      <button (click)="resetForm()" class="btn-premium btn-gray">Cancelar</button>
+    </div>
+
+  </div>
+
+  <!-- =============================== -->
+  <!-- TABLA PREMIUM -->
+  <!-- =============================== -->
+
+  <div class="card overflow-hidden">
+
+    <table class="w-full text-sm table-premium">
+      <thead>
+        <tr>
+          <th class="p-3 text-left">Nombre</th>
+          <th class="p-3 text-left">Capacidad</th>
+          <th class="p-3 text-left">Descripción</th>
+          <th class="p-3 text-center">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let salon of salones">
+
+          <td class="p-3 font-semibold text-gray-800">{{ salon.nombre }}</td>
+          <td class="p-3">{{ salon.capacidad }}</td>
+          <td class="p-3 text-gray-600">{{ salon.descripcion }}</td>
+
+          <td class="p-3 text-center space-x-3">
+
+            <button
+              (click)="editar(salon)"
+              class="btn-premium btn-yellow px-3 py-1 text-xs"
+            >
+              Editar
+            </button>
+
+            <button
+              (click)="eliminar(salon.id_salon!)"
+              class="btn-premium btn-red px-3 py-1 text-xs"
+            >
+              Desactivar
+            </button>
+
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
