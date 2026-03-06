@@ -1,112 +1,113 @@
-<div class="space-y-6">
+<div class="space-y-8">
 
-  <!-- TÍTULO -->
-  <h1 class="text-3xl font-bold">Configuración</h1>
+  <!-- TITULO -->
+  <div class="flex items-center gap-3">
+    <h1 class="text-2xl font-semibold text-gray-800">Configuración</h1>
+  </div>
 
-  <!-- GRID PRINCIPAL -->
+  <!-- GRID -->
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-    <!-- PERFIL DEL USUARIO -->
-    <div class="bg-white p-6 rounded-xl shadow space-y-4">
-      <h2 class="text-lg font-semibold text-gray-700">Perfil del Usuario</h2>
+    <!-- PERFIL -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+
+      <div class="flex items-center gap-2 mb-5">
+        <i class="fa-solid fa-user text-blue-600"></i>
+        <h2 class="text-base font-semibold text-gray-700">
+          Perfil del Usuario
+        </h2>
+      </div>
 
       <div class="space-y-4">
 
+        <!-- CORREO -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Nombre</label>
-          <input type="text" placeholder="Ej: Ana López"
-            class="w-full p-3 bg-gray-50 rounded-lg border" />
+          <label class="text-sm text-gray-600">Correo</label>
+
+          <div class="relative mt-1">
+            <i class="fa-solid fa-envelope absolute left-3 top-3 text-gray-500 text-sm"></i>
+
+            <input
+              type="email"
+              placeholder="correo@hotel.com"
+              class="w-full pl-9 py-2.5 text-sm bg-slate-200 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            />
+          </div>
         </div>
 
+        <!-- CONTRASEÑA -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Correo</label>
-          <input type="email" placeholder="correo@hotel.com"
-            class="w-full p-3 bg-gray-50 rounded-lg border" />
+          <label class="text-sm text-gray-600">Contraseña Actual</label>
+
+          <div class="relative mt-1">
+            <i class="fa-solid fa-lock absolute left-3 top-3 text-gray-500 text-sm"></i>
+
+            <input
+              type="password"
+              class="w-full pl-9 py-2.5 text-sm bg-slate-200 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            />
+          </div>
         </div>
 
-        <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
-          Guardar Cambios
+        <!-- BOTON -->
+        <button
+          class="flex items-center gap-2 text-sm bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+        >
+          <i class="fa-solid fa-floppy-disk text-sm"></i>
+          Guardar cambios
         </button>
 
       </div>
+
     </div>
 
-    <!-- PREFERENCIAS DEL SISTEMA -->
-    <div class="bg-white p-6 rounded-xl shadow space-y-4">
-      <h2 class="text-lg font-semibold text-gray-700">Preferencias del Sistema</h2>
+
+    <!-- PREFERENCIAS -->
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+
+      <div class="flex items-center gap-2 mb-5">
+        <i class="fa-solid fa-sliders text-purple-600"></i>
+        <h2 class="text-base font-semibold text-gray-700">
+          Preferencias del Sistema
+        </h2>
+      </div>
 
       <div class="space-y-4">
 
+        <!-- TEMA -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Tema</label>
-          <select class="w-full p-3 bg-gray-50 rounded-lg border">
-            <option>Claro</option>
-            <option>Oscuro</option>
-          </select>
+          <label class="text-sm text-gray-600">Tema</label>
+
+          <div class="relative mt-1">
+            <i class="fa-solid fa-palette absolute left-3 top-3 text-gray-500 text-sm"></i>
+
+            <select
+              class="w-full pl-9 py-2.5 text-sm bg-slate-200 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            >
+              <option>Claro</option>
+              <option>Oscuro</option>
+            </select>
+          </div>
         </div>
 
+        <!-- IDIOMA -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Idioma</label>
-          <select class="w-full p-3 bg-gray-50 rounded-lg border">
-            <option>Español</option>
-            <option>Inglés</option>
-          </select>
+          <label class="text-sm text-gray-600">Idioma</label>
+
+          <div class="relative mt-1">
+            <i class="fa-solid fa-language absolute left-3 top-3 text-gray-500 text-sm"></i>
+
+            <select
+              class="w-full pl-9 py-2.5 text-sm bg-slate-200 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+            >
+              <option>Español</option>
+              <option>Inglés</option>
+            </select>
+          </div>
         </div>
 
       </div>
 
-    </div>
-
-    <!-- NOTIFICACIONES -->
-    <div class="bg-white p-6 rounded-xl shadow space-y-4">
-      <h2 class="text-lg font-semibold text-gray-700">Notificaciones</h2>
-
-      <div class="space-y-4">
-
-        <label class="flex items-center space-x-3 cursor-pointer">
-          <input type="checkbox" class="w-4 h-4">
-          <span>Recibir alertas de nuevos eventos</span>
-        </label>
-
-        <label class="flex items-center space-x-3 cursor-pointer">
-          <input type="checkbox" class="w-4 h-4">
-          <span>Recordatorios automáticos</span>
-        </label>
-
-        <label class="flex items-center space-x-3 cursor-pointer">
-          <input type="checkbox" class="w-4 h-4">
-          <span>Notificaciones por correo</span>
-        </label>
-
-      </div>
-    </div>
-
-    <!-- SEGURIDAD -->
-    <div class="bg-white p-6 rounded-xl shadow space-y-4">
-      <h2 class="text-lg font-semibold text-gray-700">Seguridad</h2>
-
-      <div class="space-y-4">
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Contraseña Actual</label>
-          <input type="password" class="w-full p-3 bg-gray-50 rounded-lg border" />
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Nueva Contraseña</label>
-          <input type="password" class="w-full p-3 bg-gray-50 rounded-lg border" />
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Confirmar Contraseña</label>
-          <input type="password" class="w-full p-3 bg-gray-50 rounded-lg border" />
-        </div>
-
-        <button class="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg">
-          Cambiar Contraseña
-        </button>
-
-      </div>
     </div>
 
   </div>
