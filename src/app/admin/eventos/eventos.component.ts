@@ -135,8 +135,6 @@ export class EventosComponent implements OnInit {
               .map((item: any) => item.id_item),
           ) || [],
       }));
-
-    // 🔴 Validaciones frontend
     if (serviciosSeleccionados.length === 0) {
       alert('Debe seleccionar al menos un servicio');
       return;

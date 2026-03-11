@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MobiliarioService, Mobiliario,} from '../../services/mobiliario.service';
+import { MobiliarioService, Mobiliario } from '../../services/mobiliario.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; 
 
@@ -14,6 +14,9 @@ export class MobiliarioComponent implements OnInit {
   mobiliario: Mobiliario[] = [];
   editandoId: number | null = null;
   nuevaCantidad: number = 0;
+
+  nuevoTipo: string = '';
+  nuevoCantidad: number = 0;
 
   constructor(private mobiliarioService: MobiliarioService) {}
 
@@ -44,4 +47,34 @@ export class MobiliarioComponent implements OnInit {
   cancelar() {
     this.editandoId = null;
   }
+
+  crearMobiliario() {
+
+    const data = {
+      tipo: this.nuevoTipo,
+      cantidad: this.nuevoCantidad
+    };
+
+    this.mobiliarioService.create(data).subscribe(() => {
+
+      this.nuevoTipo = '';
+      this.nuevoCantidad = 0;
+
+      this.cargarMobiliario();
+    });
+
+  }
+
+  eliminar(id: number) {
+
+    if (confirm("¿Seguro que deseas eliminar este mobiliario?")) {
+
+      this.mobiliarioService.delete(id).subscribe(() => {
+        this.cargarMobiliario();
+      });
+
+    }
+
+  }
+
 }
