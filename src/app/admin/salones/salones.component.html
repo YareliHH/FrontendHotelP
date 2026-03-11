@@ -1,108 +1,165 @@
-<div class="p-6 space-y-10">
+<div class="p-6 space-y-8">
 
-  <!-- TÍTULO PRINCIPAL -->
-  <h2 class="title-premium">Gestión de Salones</h2>
+  <!-- TITULO -->
+  <h1 class="text-2xl font-semibold text-gray-800">
+    Gestión de Salones
+  </h1>
 
-  <!-- =============================== -->
-  <!-- FORMULARIO PREMIUM -->
-  <!-- =============================== -->
+  <!-- ================= FORMULARIO ================= -->
 
-  <div class="card space-y-6">
+  <div class="border rounded-xl shadow-sm">
 
-    <h3 class="subtitle-premium">
-      {{ editMode ? 'Editar Salón' : 'Nuevo Salón' }}
-    </h3>
+    <div class="px-6 py-4 border-b">
+      <h2 class="text-lg font-semibold text-gray-700">
+        {{ editMode ? 'Editar Salón' : 'Agregar Nuevo Salón' }}
+      </h2>
+    </div>
 
-    <div class="grid md:grid-cols-2 gap-6">
+    <div class="p-6 space-y-6">
 
-      <!-- NOMBRE -->
-      <div>
-        <label class="text-gray-700 font-medium">Nombre del salón</label>
-        <input
-          type="text"
-          [(ngModel)]="salonForm.nombre"
-          placeholder="Ej: Salón Oro"
-          class="input-premium"
-        />
-      </div>
+      <div class="grid md:grid-cols-2 gap-6">
 
-      <!-- CAPACIDAD -->
-      <div>
-        <label class="text-gray-700 font-medium">Capacidad</label>
-        <input
-          type="number"
-          [(ngModel)]="salonForm.capacidad"
-          placeholder="Ej: 150"
-          class="input-premium"
-        />
+        <!-- NOMBRE -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Nombre del Salón <span class="text-red-500">*</span>
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="salonForm.nombre"
+            placeholder="Gran Salón"
+            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- CAPACIDAD -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            Capacidad <span class="text-red-500">*</span>
+          </label>
+
+          <input
+            type="number"
+            [(ngModel)]="salonForm.capacidad"
+            placeholder="500"
+            class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          />
+        </div>
+
       </div>
 
       <!-- DESCRIPCIÓN -->
-      <div class="md:col-span-2">
-        <label class="text-gray-700 font-medium">Descripción</label>
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">
+          Descripción <span class="text-red-500">*</span>
+        </label>
+
         <textarea
           [(ngModel)]="salonForm.descripcion"
           rows="3"
-          placeholder="Agrega los detalles del salón..."
-          class="textarea-premium"
+          placeholder="Descripción del salón"
+          class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
         ></textarea>
       </div>
 
-    </div>
+      <!-- BOTONES -->
+      <div class="flex justify-end gap-3">
 
-    <!-- BOTONES -->
-    <div class="flex gap-4 pt-2">
-      <button (click)="guardar()" class="btn-premium btn-blue">Guardar</button>
-      <button (click)="resetForm()" class="btn-premium btn-gray">Cancelar</button>
+        <button
+          (click)="resetForm()"
+          class="px-4 py-2 rounded-lg bg-gray-500 text-white hover:bg-gray-600 transition"
+        >
+          Cancelar
+        </button>
+
+        <button
+          (click)="guardar()"
+          class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+        >
+          Guardar
+        </button>
+
+      </div>
+
     </div>
 
   </div>
 
-  <!-- =============================== -->
-  <!-- TABLA PREMIUM -->
-  <!-- =============================== -->
+  <!-- ================= TABLA ================= -->
 
-  <div class="card overflow-hidden">
+  <div class="border rounded-xl shadow-sm">
 
-    <table class="w-full text-sm table-premium">
-      <thead>
-        <tr>
-          <th class="p-3 text-left">Nombre</th>
-          <th class="p-3 text-left">Capacidad</th>
-          <th class="p-3 text-left">Descripción</th>
-          <th class="p-3 text-center">Acciones</th>
-        </tr>
-      </thead>
+    <div class="px-6 py-4 border-b">
+      <h3 class="text-lg font-semibold text-gray-700">
+        Lista de Salones Registrados
+      </h3>
+    </div>
 
-      <tbody>
-        <tr *ngFor="let salon of salones">
+    <div class="p-6 overflow-x-auto">
 
-          <td class="p-3 font-semibold text-gray-800">{{ salon.nombre }}</td>
-          <td class="p-3">{{ salon.capacidad }}</td>
-          <td class="p-3 text-gray-600">{{ salon.descripcion }}</td>
+      <table class="w-full text-sm">
 
-          <td class="p-3 text-center space-x-3">
+        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+          <tr>
+            <th class="p-3 text-left">Nombre</th>
+            <th class="p-3 text-left">Capacidad</th>
+            <th class="p-3 text-left">Descripción</th>
+            <th class="p-3 text-center">Acciones</th>
+          </tr>
+        </thead>
 
-            <button
-              (click)="editar(salon)"
-              class="btn-premium btn-yellow px-3 py-1 text-xs"
-            >
-              Editar
-            </button>
+        <tbody>
 
-            <button
-              (click)="eliminar(salon.id_salon!)"
-              class="btn-premium btn-red px-3 py-1 text-xs"
-            >
-              Desactivar
-            </button>
+          <tr
+            *ngFor="let salon of salones"
+            class="border-b hover:bg-gray-50"
+          >
 
-          </td>
+            <td class="p-3 font-medium text-gray-800">
+              {{ salon.nombre }}
+            </td>
 
-        </tr>
-      </tbody>
+            <td class="p-3">
+              {{ salon.capacidad }} personas
+            </td>
 
-    </table>
+            <td class="p-3 text-gray-600">
+              {{ salon.descripcion }}
+            </td>
+
+            <!-- ACCIONES -->
+            <td class="p-3">
+
+              <div class="flex justify-center gap-2">
+
+                <!-- EDITAR -->
+                <button
+                  (click)="editar(salon)"
+                  class="bg-yellow-400 hover:bg-yellow-500 text-white p-1.5 rounded-md text-xs"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+
+                <!-- ELIMINAR -->
+                <button
+                  (click)="eliminar(salon.id_salon!)"
+                  class="bg-red-500 hover:bg-red-600 text-white p-1.5 rounded-md text-xs"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
 
   </div>
 
