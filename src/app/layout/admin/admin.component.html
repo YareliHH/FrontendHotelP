@@ -6,10 +6,9 @@
     class="bg-slate-900 text-white flex flex-col transition-all duration-300"
   >
 
-    <!-- LOGO + FLECHA -->
+    <!-- LOGO + BOTON -->
     <div class="flex items-center justify-between mb-10">
 
-      <!-- LOGO -->
       <div class="flex justify-center w-full">
         <img
           src="assets/img/Logoposada.png"
@@ -18,7 +17,6 @@
         />
       </div>
 
-      <!-- BOTON FLECHA -->
       <button
         (click)="toggleSidebar()"
         class="text-white text-xl hover:text-orange-400 transition ml-2"
@@ -32,13 +30,14 @@
     </div>
 
     <!-- MENU -->
-    <nav class="flex-1 space-y-3">
+    <nav class="flex-1 space-y-2">
 
       <!-- Dashboard -->
       <a
         routerLink="/admin/dashboard"
-        routerLinkActive="bg-slate-700 text-white shadow"
-        class="flex items-center rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200"
+        routerLinkActive="bg-slate-800 text-white border-l-4 border-orange-500"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="flex items-center rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 border-l-4 border-transparent"
         [ngClass]="isCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3'"
       >
         <i class="fa-solid fa-chart-line text-lg"></i>
@@ -48,8 +47,8 @@
       <!-- Eventos -->
       <a
         routerLink="/admin/eventos"
-        routerLinkActive="bg-slate-700 text-white shadow"
-        class="flex items-center rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200"
+        routerLinkActive="bg-slate-800 text-white border-l-4 border-orange-500"
+        class="flex items-center rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 border-l-4 border-transparent"
         [ngClass]="isCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3'"
       >
         <i class="fa-solid fa-calendar-days text-lg"></i>
@@ -59,8 +58,8 @@
       <!-- Salones -->
       <a
         routerLink="/admin/salones"
-        routerLinkActive="bg-slate-700 text-white shadow"
-        class="flex items-center rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200"
+        routerLinkActive="bg-slate-800 text-white border-l-4 border-orange-500"
+        class="flex items-center rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 border-l-4 border-transparent"
         [ngClass]="isCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3'"
       >
         <i class="fa-solid fa-building text-lg"></i>
@@ -70,8 +69,8 @@
       <!-- Servicios -->
       <a
         routerLink="/admin/servicios"
-        routerLinkActive="bg-slate-700 text-white shadow"
-        class="flex items-center rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200"
+        routerLinkActive="bg-slate-800 text-white border-l-4 border-orange-500"
+        class="flex items-center rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 border-l-4 border-transparent"
         [ngClass]="isCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3'"
       >
         <i class="fa-solid fa-bell-concierge text-lg"></i>
@@ -81,8 +80,8 @@
       <!-- Mobiliario -->
       <a
         routerLink="/admin/mobiliario"
-        routerLinkActive="bg-slate-700 text-white shadow"
-        class="flex items-center rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200"
+        routerLinkActive="bg-slate-800 text-white border-l-4 border-orange-500"
+        class="flex items-center rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 border-l-4 border-transparent"
         [ngClass]="isCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3'"
       >
         <i class="fa-solid fa-couch text-lg"></i>
@@ -92,8 +91,8 @@
       <!-- Configuración -->
       <a
         routerLink="/admin/configuracion"
-        routerLinkActive="bg-slate-700 text-white shadow"
-        class="flex items-center rounded-lg text-slate-300 hover:bg-slate-700 hover:text-white transition-all duration-200"
+        routerLinkActive="bg-slate-800 text-white border-l-4 border-orange-500"
+        class="flex items-center rounded-md text-slate-300 hover:bg-slate-800 hover:text-white transition-all duration-200 border-l-4 border-transparent"
         [ngClass]="isCollapsed ? 'justify-center p-3' : 'gap-3 px-4 py-3'"
       >
         <i class="fa-solid fa-gear text-lg"></i>
@@ -102,7 +101,7 @@
 
     </nav>
 
-    <!-- CERRAR SESIÓN -->
+    <!-- CERRAR SESION -->
     <div class="pt-6 border-t border-slate-700">
 
       <div
@@ -110,7 +109,6 @@
         class="flex items-center gap-3 text-orange-400 hover:text-orange-500 cursor-pointer px-4 py-3 transition"
         [ngClass]="isCollapsed ? 'justify-center' : ''"
       >
-
         <i class="fa-solid fa-right-from-bracket"></i>
 
         <span *ngIf="!isCollapsed">
@@ -125,9 +123,7 @@
 
   <!-- CONTENIDO -->
   <main class="flex-1 p-8 overflow-y-auto bg-white">
-
     <router-outlet></router-outlet>
-
   </main>
 
 </div>
