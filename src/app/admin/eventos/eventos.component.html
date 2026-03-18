@@ -149,6 +149,7 @@
           type="time"
           class="input-premium"
           [(ngModel)]="evento.hora_inicio"
+          (input)="calcularDuracion()"
         />
       </div>
 
@@ -158,6 +159,7 @@
           type="time"
           class="input-premium"
           [(ngModel)]="evento.hora_fin"
+          (input)="calcularDuracion()"
         />
       </div>
 
@@ -167,6 +169,7 @@
           type="number"
           class="input-premium"
           [(ngModel)]="evento.duracion_horas"
+          readonly
         />
       </div>
 

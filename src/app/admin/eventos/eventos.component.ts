@@ -29,6 +29,28 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
+  // 🔥 CALCULAR DURACIÓN AUTOMÁTICA
+  // ================================
+  calcularDuracion(): void {
+    if (this.evento.hora_inicio && this.evento.hora_fin) {
+      const inicio = new Date(`1970-01-01T${this.evento.hora_inicio}`);
+      const fin = new Date(`1970-01-01T${this.evento.hora_fin}`);
+
+      // ❌ Evita errores
+      if (fin <= inicio) {
+        this.evento.duracion_horas = 0;
+        return;
+      }
+
+      const diferencia =
+        (fin.getTime() - inicio.getTime()) / (1000 * 60 * 60);
+
+      // ✔️ Redondeo opcional
+      this.evento.duracion_horas = Math.round(diferencia * 10) / 10;
+    }
+  }
+
+  // ================================
   // CARGAS INICIALES
   // ================================
 
@@ -105,7 +127,6 @@ export class EventosComponent implements OnInit {
       servicios: [],
     };
 
-    // 🔥 Limpia también selección de servicios
     this.serviciosDisponibles.forEach((s) => {
       s.seleccionado = false;
       s.cantidad_personas = 0;
@@ -135,6 +156,7 @@ export class EventosComponent implements OnInit {
               .map((item: any) => item.id_item),
           ) || [],
       }));
+
     if (serviciosSeleccionados.length === 0) {
       alert('Debe seleccionar al menos un servicio');
       return;
