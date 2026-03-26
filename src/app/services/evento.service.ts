@@ -22,7 +22,10 @@ export class EventoService {
   obtenerEventos(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
-
+  // 👇 ESTA ES LA CLAVE
+  obtenerResumen(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/resumen`);
+  }
   obtenerServicios() {
     return this.http.get('http://localhost:3000/api/servicios/estructura');
   }

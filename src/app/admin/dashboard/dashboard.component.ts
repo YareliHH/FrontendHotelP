@@ -7,14 +7,14 @@ import { EventoService } from '../../services/evento.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, CalendarComponent], // 👈 AQUÍ ESTÁ LA SOLUCIÓN
+  imports: [CommonModule, CalendarComponent], 
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
   totalEventos = 0;
   ingresosEstimados = '$125,000';
-  salonesDisponibles = 8;
+  salonesDisponibles = 0;
 
   eventos: any[] = [];
 
@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerEventos();
+    this.obtenerResumen(); // 👈 SOLO AGREGADO
   }
 
   toggleSidebar(): void {
@@ -42,11 +43,10 @@ export class DashboardComponent implements OnInit {
   obtenerEventos(): void {
     this.eventoService.obtenerEventos().subscribe({
       next: (data: any[]) => {
-        // 🔥 Transformamos los datos del backend al formato FullCalendar
         this.eventos = data.map((e) => ({
           id: e.id_evento,
           title: `${e.nombre_contratante} - ${e.nombre_salon}`,
-          start: e.fecha_evento?.split('T')[0], // evita error si viene null
+          start: e.fecha_evento?.split('T')[0],
           allDay: true,
           color: e.estado === 'ACTIVO' ? '#16a34a' : '#dc2626',
         }));
@@ -58,6 +58,21 @@ export class DashboardComponent implements OnInit {
       error: (err) => {
         console.error('Error al cargar eventos', err);
       },
+    });
+  }
+
+  // 👇 FUNCIÓN NUEVA (NO MODIFICA NADA EXISTENTE)
+  obtenerResumen(): void {
+    this.eventoService.obtenerResumen().subscribe({
+      next: (data) => {
+        console.log('Resumen:', data);
+
+        this.totalEventos = data.totalEventos;
+        this.salonesDisponibles = data.salonesTotales;
+      },
+      error: (err) => {
+        console.error('Error al obtener resumen', err);
+      }
     });
   }
 }
