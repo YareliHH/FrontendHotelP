@@ -29,14 +29,13 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
-  // 🔥 CALCULAR DURACIÓN AUTOMÁTICA
+  // 🔥 CALCULAR DURACIÓN
   // ================================
   calcularDuracion(): void {
     if (this.evento.hora_inicio && this.evento.hora_fin) {
       const inicio = new Date(`1970-01-01T${this.evento.hora_inicio}`);
       const fin = new Date(`1970-01-01T${this.evento.hora_fin}`);
 
-      // ❌ Evita errores
       if (fin <= inicio) {
         this.evento.duracion_horas = 0;
         return;
@@ -45,13 +44,12 @@ export class EventosComponent implements OnInit {
       const diferencia =
         (fin.getTime() - inicio.getTime()) / (1000 * 60 * 60);
 
-      // ✔️ Redondeo opcional
       this.evento.duracion_horas = Math.round(diferencia * 10) / 10;
     }
   }
 
   // ================================
-  // CARGAS INICIALES
+  // CARGAS
   // ================================
 
   loadEventos() {
@@ -68,13 +66,7 @@ export class EventosComponent implements OnInit {
 
   loadServicios() {
     this.eventoService.obtenerServicios().subscribe((data: any) => {
-      if (!data || !Array.isArray(data)) {
-        console.error('La estructura de servicios no es válida:', data);
-        this.serviciosDisponibles = [];
-        return;
-      }
-
-      this.serviciosDisponibles = data.map((s: any) => ({
+      this.serviciosDisponibles = (data || []).map((s: any) => ({
         ...s,
         seleccionado: false,
         cantidad_personas: 0,
@@ -90,9 +82,8 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
-  // RESET FORMULARIO
+  // RESET FORMULARIO (🔥 AQUÍ ESTABA EL ERROR)
   // ================================
-
   resetFormulario() {
     this.evento = {
       nombre_contratante: '',
@@ -114,13 +105,16 @@ export class EventosComponent implements OnInit {
       porcentaje_anticipo: 0,
       fecha_pago_anticipo: '',
       especificaciones_montaje: '',
-      equipo_audiovisual: 'N/A',
-      decoracion: 'N/A',
-      guardarropa: 'N/A',
-      uso_salon: 'A',
-      uso_mobiliario: 'A',
-      servicio_meseros: 'A',
-      uso_estacionamiento: 'A',
+
+      // ✅ AHORA CORRECTO (booleanos)
+      equipo_audiovisual: false,
+      decoracion: false,
+      guardarropa: false,
+      uso_salon: false,
+      uso_mobiliario: false,
+      servicio_meseros: false,
+      uso_estacionamiento: false,
+
       otros_servicios: '',
       observaciones: '',
       id_usuario: 1,
@@ -140,9 +134,8 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
-  // GUARDAR EVENTO
+  // GUARDAR EVENTO (🔥 CONVERSIÓN AQUÍ)
   // ================================
-
   guardar() {
     const serviciosSeleccionados = this.serviciosDisponibles
       .filter((s) => s.seleccionado)
@@ -173,6 +166,15 @@ export class EventosComponent implements OnInit {
 
     this.evento.servicios = serviciosSeleccionados;
 
+    // 🔥 CONVERSIÓN A "A" / "N/A"
+    this.evento.equipo_audiovisual = this.evento.equipo_audiovisual ? 'A' : 'N/A';
+    this.evento.decoracion = this.evento.decoracion ? 'A' : 'N/A';
+    this.evento.guardarropa = this.evento.guardarropa ? 'A' : 'N/A';
+    this.evento.uso_salon = this.evento.uso_salon ? 'A' : 'N/A';
+    this.evento.uso_mobiliario = this.evento.uso_mobiliario ? 'A' : 'N/A';
+    this.evento.servicio_meseros = this.evento.servicio_meseros ? 'A' : 'N/A';
+    this.evento.uso_estacionamiento = this.evento.uso_estacionamiento ? 'A' : 'N/A';
+
     this.eventoService.crearEvento(this.evento).subscribe({
       next: () => {
         alert('Evento creado correctamente');
@@ -187,9 +189,8 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
-  // GENERAR PDF
+  // PDF
   // ================================
-
   generarContrato(id: number) {
     window.open(`http://localhost:3000/api/eventos/contrato/${id}`, '_blank');
   }

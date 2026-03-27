@@ -280,90 +280,57 @@
   </div>
 
   <!-- SERVICIOS COMPLEMENTARIOS -->
-  <div class="card space-y-4">
-    <h2 class="subtitle-premium">Servicios Complementarios</h2>
+<div class="card space-y-4">
+  <h2 class="subtitle-premium">Servicios Complementarios</h2>
 
-    <div class="grid grid-cols-2 gap-4 text-gray-700">
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          #chkAudiovisual
-          (change)="
-            evento.equipo_audiovisual = chkAudiovisual.checked ? 'A' : 'N/A'
-          "
-        />
-        Equipo Audiovisual
-      </label>
+  <div class="grid grid-cols-2 gap-4 text-gray-700">
 
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          #chkDecoracion
-          (change)="evento.decoracion = chkDecoracion.checked ? 'A' : 'N/A'"
-        />
-        Decoración
-      </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="evento.equipo_audiovisual" />
+      Equipo Audiovisual
+    </label>
 
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          #chkGuardarropa
-          (change)="evento.guardarropa = chkGuardarropa.checked ? 'A' : 'N/A'"
-        />
-        Guardarropa
-      </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="evento.decoracion" />
+      Decoración
+    </label>
 
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          #chkSalon
-          (change)="evento.uso_salon = chkSalon.checked ? 'A' : 'N/A'"
-        />
-        Uso Salón
-      </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="evento.guardarropa" />
+      Guardarropa
+    </label>
 
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          #chkMobiliario
-          (change)="evento.uso_mobiliario = chkMobiliario.checked ? 'A' : 'N/A'"
-        />
-        Uso Mobiliario
-      </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="evento.uso_salon" />
+      Uso Salón
+    </label>
 
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          #chkMeseros
-          (change)="evento.servicio_meseros = chkMeseros.checked ? 'A' : 'N/A'"
-        />
-        Servicio Meseros
-      </label>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="evento.uso_mobiliario" />
+      Uso Mobiliario
+    </label>
 
-      <label class="flex items-center gap-2">
-        <input
-          type="checkbox"
-          #chkEstacionamiento
-          (change)="
-            evento.uso_estacionamiento = chkEstacionamiento.checked
-              ? 'A'
-              : 'N/A'
-          "
-        />
-        Uso Estacionamiento
-      </label>
-    </div>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="evento.servicio_meseros" />
+      Servicio Meseros
+    </label>
 
-    <div>
-      <label class="text-gray-700 font-medium">Otros servicios</label>
-      <input
-        type="text"
-        class="input-premium"
-        [(ngModel)]="evento.otros_servicios"
-      />
-    </div>
+    <label class="flex items-center gap-2">
+      <input type="checkbox" [(ngModel)]="evento.uso_estacionamiento" />
+      Uso Estacionamiento
+    </label>
+
   </div>
 
+  <div>
+    <label class="text-gray-700 font-medium">Otros servicios</label>
+    <input
+      type="text"
+      class="input-premium"
+      [(ngModel)]="evento.otros_servicios"
+    />
+  </div>
+</div>
   <!-- MONTAJE -->
   <div class="card space-y-4">
     <h2 class="subtitle-premium">Especificaciones del Montaje</h2>
