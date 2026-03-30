@@ -52,176 +52,191 @@
 <div *ngIf="mostrarFormulario" class="p-6 space-y-10">
   <h1 class="title-premium">Nuevo Evento</h1>
 
-  <!-- DATOS DEL CLIENTE -->
   <div class="card space-y-6">
-    <h2 class="subtitle-premium">Datos del Cliente</h2>
+  <h2 class="subtitle-premium">1. Datos del Contratante</h2>
 
-    <div class="grid grid-cols-2 gap-6">
-      <div>
-        <label class="text-gray-700 font-medium">Nombre del contratante</label>
-        <input
-          type="text"
-          class="input-premium"
-          [(ngModel)]="evento.nombre_contratante"
-        />
-      </div>
+  <div class="grid grid-cols-2 gap-6">
 
-      <div>
-        <label class="text-gray-700 font-medium">Teléfono 1</label>
-        <input
-          type="text"
-          class="input-premium"
-          [(ngModel)]="evento.telefono1"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Teléfono 2</label>
-        <input
-          type="text"
-          class="input-premium"
-          [(ngModel)]="evento.telefono2"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Correo electrónico</label>
-        <input type="email" class="input-premium" [(ngModel)]="evento.email" />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Empresa</label>
-        <input type="text" class="input-premium" [(ngModel)]="evento.empresa" />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">RFC</label>
-        <input type="text" class="input-premium" [(ngModel)]="evento.rfc" />
-      </div>
-
-      <div class="col-span-2">
-        <label class="text-gray-700 font-medium">Dirección fiscal</label>
-        <input
-          type="text"
-          class="input-premium"
-          [(ngModel)]="evento.direccion_fiscal"
-        />
-      </div>
+    <div>
+      <label>Nombre del contratante</label>
+      <input class="input-premium"
+             placeholder="Ej: Erika Cardenas Reyes"
+             [(ngModel)]="evento.nombre_contratante" />
     </div>
+
+    <div>
+      <label>Correo electrónico</label>
+      <input class="input-premium"
+             placeholder="Ej: cliente@email.com"
+             [(ngModel)]="evento.email" />
+    </div>
+
+    <div>
+      <label>Teléfono 1</label>
+      <input class="input-premium"
+             placeholder="Ej: 5512545678"
+             [(ngModel)]="evento.telefono1" />
+    </div>
+
+    <div>
+      <label>Teléfono 2</label>
+      <input class="input-premium"
+             placeholder="Ej: 5587654331"
+             [(ngModel)]="evento.telefono2" />
+    </div>
+
+  </div>
+</div>
+
+  <div class="card space-y-6">
+  <h2 class="subtitle-premium">2. Datos para Facturación</h2>
+
+  <div class="grid grid-cols-2 gap-6">
+
+    <div>
+      <label>Empresa</label>
+      <input class="input-premium"
+             placeholder="Ej: Viajes Mundo"
+             [(ngModel)]="evento.empresa" />
+    </div>
+
+    <div>
+      <label>R.F.C</label>
+      <input class="input-premium"
+             placeholder="Ej: XAXXX0101111"
+             [(ngModel)]="evento.rfc" />
+    </div>
+
+    <div class="col-span-2">
+      <label>Dirección</label>
+      <input class="input-premium"
+             placeholder="Ej: Av. Principal #160, Tampico"
+             [(ngModel)]="evento.direccion_fiscal" />
+    </div>
+
+    <div>
+      <label>Método de pago</label>
+      <select class="input-premium" [(ngModel)]="evento.metodo_pago">
+        <option value="">Seleccione</option>
+        <option value="Transferencia">Transferencia</option>
+        <option value="Efectivo">Efectivo</option>
+        <option value="Tarjeta">Tarjeta</option>
+      </select>
+    </div>
+
+    <div>
+      <label>Cuenta maestra</label>
+      <input class="input-premium"
+             placeholder="Ej: 9070"
+             [(ngModel)]="evento.cuenta_maestra" />
+    </div>
+
+    <div>
+      <label>Factura</label>
+      <select class="input-premium" [(ngModel)]="evento.factura">
+        <option value="">Seleccione</option>
+        <option value="GLOBAL">GLOBAL</option>
+        <option value="DEPÓSITO">DEPÓSITO</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+  <div class="card space-y-6">
+  <h2 class="subtitle-premium">3. Datos del Evento</h2>
+
+  <div class="grid grid-cols-3 gap-6">
+
+    <div>
+      <label>Fecha del evento</label>
+      <input type="date" class="input-premium"
+             [(ngModel)]="evento.fecha_evento" />
+    </div>
+
+    <div>
+      <label>Nombre del evento</label>
+      <input class="input-premium"
+             placeholder="Ej: Encuentro social"
+             [(ngModel)]="evento.nombre_evento" />
+    </div>
+
+    <div>
+      <label>Salón</label>
+      <select class="input-premium" [(ngModel)]="evento.id_salon">
+        <option value="">Seleccione salón</option>
+        <option *ngFor="let salon of salones" [value]="salon.id_salon">
+          {{ salon.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div>
+    <label>Hora inicio</label>
+    <input
+      type="time"
+      class="input-premium"
+      [(ngModel)]="evento.hora_inicio"
+      (change)="calcularDuracion()"
+    />
   </div>
 
-  <!-- DATOS DEL EVENTO -->
-  <div class="card space-y-6">
-    <h2 class="subtitle-premium">Datos del Evento</h2>
-
-    <div class="grid grid-cols-3 gap-6">
-      <div>
-        <label class="text-gray-700 font-medium">Fecha del evento</label>
-        <input
-          type="date"
-          class="input-premium"
-          [(ngModel)]="evento.fecha_evento"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Nombre del evento</label>
-        <input
-          type="text"
-          class="input-premium"
-          [(ngModel)]="evento.nombre_evento"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Salón</label>
-        <select class="input-premium" [(ngModel)]="evento.id_salon">
-          <option value="">Seleccione salón</option>
-          <option *ngFor="let salon of salones" [value]="salon.id_salon">
-            {{ salon.nombre }}
-          </option>
-        </select>
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Hora inicio</label>
-        <input
-          type="time"
-          class="input-premium"
-          [(ngModel)]="evento.hora_inicio"
-          (input)="calcularDuracion()"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Hora fin</label>
-        <input
-          type="time"
-          class="input-premium"
-          [(ngModel)]="evento.hora_fin"
-          (input)="calcularDuracion()"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Duración (horas)</label>
-        <input
-          type="number"
-          class="input-premium"
-          [(ngModel)]="evento.duracion_horas"
-          readonly
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Número de personas</label>
-        <input
-          type="number"
-          class="input-premium"
-          [(ngModel)]="evento.numero_personas"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium"
-          >Precio persona adicional</label
-        >
-        <input
-          type="number"
-          class="input-premium"
-          [(ngModel)]="evento.precio_persona_adicional"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">% Anticipo</label>
-        <input
-          type="number"
-          class="input-premium"
-          [(ngModel)]="evento.porcentaje_anticipo"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Fecha pago anticipo</label>
-        <input
-          type="date"
-          class="input-premium"
-          [(ngModel)]="evento.fecha_pago_anticipo"
-        />
-      </div>
-
-      <div>
-        <label class="text-gray-700 font-medium">Método de pago</label>
-        <select class="input-premium" [(ngModel)]="evento.metodo_pago">
-          <option value="">Seleccione método</option>
-          <option value="Transferencia">Transferencia</option>
-          <option value="Efectivo">Efectivo</option>
-          <option value="Tarjeta">Tarjeta</option>
-        </select>
-      </div>
-    </div>
+  <div>
+    <label>Hora fin</label>
+    <input
+      type="time"
+      class="input-premium"
+      [(ngModel)]="evento.hora_fin"
+      (change)="calcularDuracion()"
+    />
   </div>
+
+  <div>
+    <label>Duración (horas)</label>
+    <input
+      class="input-premium"
+      placeholder="Auto"
+      [(ngModel)]="evento.duracion_horas"
+      readonly
+    />
+  </div>
+
+    <div>
+      <label>Número de personas</label>
+      <input type="number" class="input-premium"
+             placeholder="Ej: 235"
+             [(ngModel)]="evento.numero_personas" />
+    </div>
+
+    <div>
+      <label>Tipo de servicio</label>
+      <input class="input-premium"
+             placeholder="Ej: Desayuno / Comida / Coffee Break"
+             [(ngModel)]="evento.tipo_servicio" />
+    </div>
+
+    <div>
+      <label>Precio persona adicional</label>
+      <input type="number" class="input-premium"
+             placeholder="Ej: 1200"
+             [(ngModel)]="evento.precio_persona_adicional" />
+    </div>
+
+    <div>
+      <label>% Anticipo</label>
+      <input type="number" class="input-premium"
+             placeholder="Ej: 50"
+             [(ngModel)]="evento.porcentaje_anticipo" />
+    </div>
+
+    <div>
+      <label>Fecha pago anticipo</label>
+      <input type="date" class="input-premium"
+             [(ngModel)]="evento.fecha_pago_anticipo" />
+    </div>
+
+  </div>
+</div>
 
   <!-- SERVICIOS PRINCIPALES -->
   <div *ngFor="let servicio of serviciosDisponibles" class="border-b py-4">
@@ -241,7 +256,7 @@
       />
     </div>
 
-    <!-- 🔥 SECCIONES DINÁMICAS (solo si está seleccionado) -->
+    <!-- SECCIONES DINÁMICAS (solo si está seleccionado) -->
     <div
       *ngIf="servicio.seleccionado && servicio.secciones?.length"
       class="mt-4 ml-6 space-y-6 bg-gray-50 p-4 rounded-lg"
