@@ -51,7 +51,6 @@ export class EventosComponent implements OnInit {
   // ================================
   // CARGAS
   // ================================
-
   loadEventos() {
     this.eventoService.obtenerEventos().subscribe((data: any) => {
       this.eventos = data;
@@ -82,7 +81,7 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
-  // RESET FORMULARIO (🔥 AQUÍ ESTABA EL ERROR)
+  // RESET FORMULARIO
   // ================================
   resetFormulario() {
     this.evento = {
@@ -106,7 +105,6 @@ export class EventosComponent implements OnInit {
       fecha_pago_anticipo: '',
       especificaciones_montaje: '',
 
-      // ✅ AHORA CORRECTO (booleanos)
       equipo_audiovisual: false,
       decoracion: false,
       guardarropa: false,
@@ -134,7 +132,7 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
-  // GUARDAR EVENTO (🔥 CONVERSIÓN AQUÍ)
+  // GUARDAR EVENTO
   // ================================
   guardar() {
     const serviciosSeleccionados = this.serviciosDisponibles
@@ -146,7 +144,7 @@ export class EventosComponent implements OnInit {
           s.secciones?.flatMap((sec: any) =>
             sec.items
               ?.filter((item: any) => item.seleccionado)
-              .map((item: any) => item.id_item),
+              .map((item: any) => item.id_item)
           ) || [],
       }));
 
@@ -157,7 +155,7 @@ export class EventosComponent implements OnInit {
 
     if (
       serviciosSeleccionados.some(
-        (s) => !s.cantidad_personas || s.cantidad_personas <= 0,
+        (s) => !s.cantidad_personas || s.cantidad_personas <= 0
       )
     ) {
       alert('Ingrese una cantidad válida para los servicios seleccionados');
@@ -166,7 +164,7 @@ export class EventosComponent implements OnInit {
 
     this.evento.servicios = serviciosSeleccionados;
 
-    // 🔥 CONVERSIÓN A "A" / "N/A"
+    // Conversión booleanos
     this.evento.equipo_audiovisual = this.evento.equipo_audiovisual ? 'A' : 'N/A';
     this.evento.decoracion = this.evento.decoracion ? 'A' : 'N/A';
     this.evento.guardarropa = this.evento.guardarropa ? 'A' : 'N/A';
@@ -193,5 +191,40 @@ export class EventosComponent implements OnInit {
   // ================================
   generarContrato(id: number) {
     window.open(`http://localhost:3000/api/eventos/contrato/${id}`, '_blank');
+  }
+
+  // ================================
+  // FINALIZAR EVENTO ⚫
+  // ================================
+  finalizarEvento(id: number) {
+    if (!confirm("¿Seguro que deseas finalizar este evento?")) return;
+
+    this.eventoService.finalizarEvento(id).subscribe({
+      next: () => {
+        alert("Evento finalizado correctamente");
+        this.loadEventos();
+      },
+      error: (err) => {
+        console.error(err);
+        alert("Error al finalizar evento");
+      }
+    });
+  }
+  // ================================
+  // ELIMINAR EVENTO 🔴
+  // ================================
+  eliminarEvento(id: number) {
+    if (!confirm("¿Eliminar este evento?")) return;
+
+    this.eventoService.eliminarEvento(id).subscribe({
+      next: () => {
+        alert("Evento eliminado correctamente");
+        this.loadEventos();
+      },
+      error: (err) => {
+        console.error(err);
+        alert("Error al eliminar evento");
+      }
+    });
   }
 }

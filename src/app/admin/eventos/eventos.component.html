@@ -20,6 +20,7 @@
           <th class="p-3 text-left">Cliente</th>
           <th class="p-3 text-left">Fecha</th>
           <th class="p-3 text-left">Total</th>
+          <th class="p-3 text-center">Estado</th>
           <th class="p-3 text-center">Acciones</th>
         </tr>
       </thead>
@@ -30,15 +31,43 @@
           <td class="p-3">{{ e.nombre_contratante }}</td>
           <td class="p-3">{{ e.fecha_evento }}</td>
           <td class="p-3 font-semibold text-green-700">${{ e.total }}</td>
-
           <td class="p-3 text-center">
+          <span *ngIf="e.estado === 'activo' || e.estado === 'ACTIVO'">
+            🟢 Activo
+          </span>
+          <span *ngIf="e.estado === 'finalizado'">
+            ⚫ Finalizado
+          </span>
+          </td>
+          <td class="p-3 text-center">
+          <div class="flex justify-center gap-2">
+
+            <!-- FINALIZAR -->
+            <button
+              *ngIf="e.estado === 'activo' || e.estado === 'ACTIVO'"
+              (click)="finalizarEvento(e.id_evento)"
+              class="btn-premium bg-gray-500 text-white px-3 py-1 text-xs"
+            >
+             Finalizar
+            </button>
+            <button
+            *ngIf="e.estado === 'finalizado'"
+            (click)="eliminarEvento(e.id_evento)"
+            class="btn-premium bg-red-500 text-white px-3 py-1 text-xs"
+          >
+            Eliminar
+          </button>
+
+            <!-- PDF -->
             <button
               (click)="generarContrato(e.id_evento)"
               class="btn-premium btn-green px-3 py-1 text-xs"
             >
               PDF
             </button>
-          </td>
+
+          </div>
+        </td>
         </tr>
       </tbody>
     </table>

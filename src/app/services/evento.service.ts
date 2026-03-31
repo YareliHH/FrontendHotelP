@@ -26,6 +26,12 @@ export class EventoService {
   obtenerResumen(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/resumen`);
   }
+  finalizarEvento(id: number) {
+  return this.http.put(`${this.apiUrl}/${id}/finalizar`, {}); // 👇 ESTA ES NUEVA
+  }
+  eliminarEvento(id: number) {
+  return this.http.delete(`${this.apiUrl}/${id}`);
+  }
   obtenerServicios() {
     return this.http.get('http://localhost:3000/api/servicios/estructura');
   }
