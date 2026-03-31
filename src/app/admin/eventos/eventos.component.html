@@ -50,15 +50,22 @@
       </td>
           <td class="p-3 text-center">
           <div class="flex justify-center gap-2">
-
+              <!-- EDITAR -->
+          <button
+            *ngIf="e.estado?.toLowerCase() === 'activo'"
+            (click)="editarEvento(e)"
+            class="btn-premium bg-yellow-500 text-white px-3 py-1 text-xs"
+          >
+            Editar
+          </button>
             <!-- FINALIZAR -->
             <button
-              *ngIf="e.estado === 'activo' || e.estado === 'ACTIVO'"
-              (click)="finalizarEvento(e.id_evento)"
-              class="btn-premium bg-gray-500 text-white px-3 py-1 text-xs"
-            >
-             Finalizar
-            </button>
+            *ngIf="e.estado?.toLowerCase() === 'activo'"
+            (click)="finalizarEvento(e.id_evento)"
+            class="btn-premium bg-gray-500 text-white px-3 py-1 text-xs"
+          >
+            Finalizar
+          </button>
             <button
             *ngIf="e.estado === 'finalizado'"
             (click)="eliminarEvento(e.id_evento)"
@@ -88,7 +95,9 @@
 <!-- ========================================= -->
 
 <div *ngIf="mostrarFormulario" class="p-6 space-y-10">
-  <h1 class="title-premium">Nuevo Evento</h1>
+ <h1 class="title-premium">
+  {{ modoEdicion ? 'Editar Evento' : 'Nuevo Evento' }}
+</h1>
 
   <div class="card space-y-6">
   <h2 class="subtitle-premium">1. Datos del Contratante</h2>
@@ -406,7 +415,7 @@
   <!-- BOTÓN GUARDAR -->
   <div class="text-right">
     <button class="btn-premium btn-blue px-8 py-3" (click)="guardar()">
-      Guardar Evento
-    </button>
+    {{ modoEdicion ? 'Actualizar Evento' : 'Guardar Evento' }}
+  </button>
   </div>
 </div>

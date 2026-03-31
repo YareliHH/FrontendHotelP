@@ -19,6 +19,9 @@ export class EventosComponent implements OnInit {
 
   evento: any = {};
 
+  modoEdicion: boolean = false;
+  eventoIdEditando: number | null = null;
+
   constructor(private eventoService: EventoService) {}
 
   ngOnInit(): void {
@@ -29,7 +32,7 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
-  // 🔥 CALCULAR DURACIÓN
+  // CALCULAR DURACIÓN
   // ================================
   calcularDuracion(): void {
     if (this.evento.hora_inicio && this.evento.hora_fin) {
@@ -129,10 +132,23 @@ export class EventosComponent implements OnInit {
         });
       });
     });
+
+    this.modoEdicion = false;
+    this.eventoIdEditando = null;
   }
 
   // ================================
-  // GUARDAR EVENTO
+  // EDITAR
+  // ================================
+  editarEvento(e: any) {
+    this.evento = { ...e };
+    this.modoEdicion = true;
+    this.eventoIdEditando = e.id_evento;
+    this.mostrarFormulario = true;
+  }
+
+  // ================================
+  // GUARDAR / ACTUALIZAR
   // ================================
   guardar() {
     const serviciosSeleccionados = this.serviciosDisponibles
@@ -158,13 +174,13 @@ export class EventosComponent implements OnInit {
         (s) => !s.cantidad_personas || s.cantidad_personas <= 0
       )
     ) {
-      alert('Ingrese una cantidad válida para los servicios seleccionados');
+      alert('Ingrese una cantidad válida');
       return;
     }
 
     this.evento.servicios = serviciosSeleccionados;
 
-    // Conversión booleanos
+    // 🔥 CONVERSIÓN
     this.evento.equipo_audiovisual = this.evento.equipo_audiovisual ? 'A' : 'N/A';
     this.evento.decoracion = this.evento.decoracion ? 'A' : 'N/A';
     this.evento.guardarropa = this.evento.guardarropa ? 'A' : 'N/A';
@@ -173,6 +189,62 @@ export class EventosComponent implements OnInit {
     this.evento.servicio_meseros = this.evento.servicio_meseros ? 'A' : 'N/A';
     this.evento.uso_estacionamiento = this.evento.uso_estacionamiento ? 'A' : 'N/A';
 
+    // ====================
+    // EDITAR (CORREGIDO)
+    // ====================
+    if (this.modoEdicion) {
+      const data = {
+        nombre_contratante: this.evento.nombre_contratante,
+        telefono1: this.evento.telefono1,
+        telefono2: this.evento.telefono2,
+        email: this.evento.email,
+        empresa: this.evento.empresa,
+        direccion_fiscal: this.evento.direccion_fiscal,
+        rfc: this.evento.rfc,
+        metodo_pago: this.evento.metodo_pago,
+        fecha_evento: this.evento.fecha_evento,
+        nombre_evento: this.evento.nombre_evento,
+        id_salon: this.evento.id_salon,
+        hora_inicio: this.evento.hora_inicio,
+        hora_fin: this.evento.hora_fin,
+        duracion_horas: this.evento.duracion_horas,
+        numero_personas: this.evento.numero_personas,
+        precio_persona_adicional: this.evento.precio_persona_adicional,
+        porcentaje_anticipo: this.evento.porcentaje_anticipo,
+        fecha_pago_anticipo: this.evento.fecha_pago_anticipo,
+        especificaciones_montaje: this.evento.especificaciones_montaje,
+        observaciones: this.evento.observaciones,
+        equipo_audiovisual: this.evento.equipo_audiovisual,
+        decoracion: this.evento.decoracion,
+        guardarropa: this.evento.guardarropa,
+        uso_salon: this.evento.uso_salon,
+        uso_mobiliario: this.evento.uso_mobiliario,
+        servicio_meseros: this.evento.servicio_meseros,
+        uso_estacionamiento: this.evento.uso_estacionamiento,
+        otros_servicios: this.evento.otros_servicios
+      };
+
+      this.eventoService
+        .actualizarEvento(this.eventoIdEditando!, data)
+        .subscribe({
+          next: () => {
+            alert("Evento actualizado correctamente");
+            this.loadEventos();
+            this.resetFormulario();
+            this.mostrarFormulario = false;
+          },
+          error: (err) => {
+            console.error("ERROR:", err);
+            alert("Error al actualizar evento");
+          },
+        });
+
+      return;
+    }
+
+    // ====================
+    // CREAR
+    // ====================
     this.eventoService.crearEvento(this.evento).subscribe({
       next: () => {
         alert('Evento creado correctamente');
@@ -181,7 +253,8 @@ export class EventosComponent implements OnInit {
         this.mostrarFormulario = false;
       },
       error: (err) => {
-        alert(err.error?.detalle || 'Error al crear evento');
+        console.error(err);
+        alert('Error al crear evento');
       },
     });
   }
@@ -194,37 +267,26 @@ export class EventosComponent implements OnInit {
   }
 
   // ================================
-  // FINALIZAR EVENTO ⚫
+  // FINALIZAR
   // ================================
   finalizarEvento(id: number) {
-    if (!confirm("¿Seguro que deseas finalizar este evento?")) return;
+    if (!confirm("¿Finalizar evento?")) return;
 
-    this.eventoService.finalizarEvento(id).subscribe({
-      next: () => {
-        alert("Evento finalizado correctamente");
-        this.loadEventos();
-      },
-      error: (err) => {
-        console.error(err);
-        alert("Error al finalizar evento");
-      }
+    this.eventoService.finalizarEvento(id).subscribe(() => {
+      alert("Finalizado");
+      this.loadEventos();
     });
   }
+
   // ================================
-  // ELIMINAR EVENTO 🔴
+  // ELIMINAR
   // ================================
   eliminarEvento(id: number) {
-    if (!confirm("¿Eliminar este evento?")) return;
+    if (!confirm("¿Eliminar evento?")) return;
 
-    this.eventoService.eliminarEvento(id).subscribe({
-      next: () => {
-        alert("Evento eliminado correctamente");
-        this.loadEventos();
-      },
-      error: (err) => {
-        console.error(err);
-        alert("Error al eliminar evento");
-      }
+    this.eventoService.eliminarEvento(id).subscribe(() => {
+      alert("Eliminado");
+      this.loadEventos();
     });
   }
 }

@@ -29,6 +29,9 @@ export class EventoService {
   finalizarEvento(id: number) {
   return this.http.put(`${this.apiUrl}/${id}/finalizar`, {}); // 👇 ESTA ES NUEVA
   }
+  actualizarEvento(id: number, data: any) {
+  return this.http.put(`${this.apiUrl}/${id}`, data);
+  }
   eliminarEvento(id: number) {
   return this.http.delete(`${this.apiUrl}/${id}`);
   }

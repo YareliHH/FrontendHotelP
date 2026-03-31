@@ -7,13 +7,13 @@ import { EventoService } from '../../services/evento.service';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, CalendarComponent], 
+  imports: [CommonModule, CalendarComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
   totalEventos = 0;
-  ingresosEstimados = '$125,000';
+  ingresosEstimados: number = 0; // 🔥 ahora es dinámico
   salonesDisponibles = 0;
 
   eventos: any[] = [];
@@ -23,14 +23,17 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private eventoService: EventoService,
+    private eventoService: EventoService
   ) {}
 
   ngOnInit(): void {
     this.obtenerEventos();
-    this.obtenerResumen(); // 👈 SOLO AGREGADO
+    this.obtenerResumen();
   }
 
+  // ================================
+  // SIDEBAR
+  // ================================
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
@@ -40,6 +43,9 @@ export class DashboardComponent implements OnInit {
     this.router.navigate([`/${route}`]);
   }
 
+  // ================================
+  // EVENTOS (CALENDARIO)
+  // ================================
   obtenerEventos(): void {
     this.eventoService.obtenerEventos().subscribe({
       next: (data: any[]) => {
@@ -48,7 +54,7 @@ export class DashboardComponent implements OnInit {
           title: `${e.nombre_contratante} - ${e.nombre_salon}`,
           start: e.fecha_evento?.split('T')[0],
           allDay: true,
-          color: e.estado === 'ACTIVO' ? '#16a34a' : '#dc2626',
+          color: e.estado === 'ACTIVO' ? '#16a34a' : '#2563eb', // verde / azul 🔥
         }));
 
         this.totalEventos = this.eventos.length;
@@ -61,14 +67,17 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // 👇 FUNCIÓN NUEVA (NO MODIFICA NADA EXISTENTE)
+  // ================================
+  // RESUMEN (🔥 INGRESOS DINÁMICOS)
+  // ================================
   obtenerResumen(): void {
     this.eventoService.obtenerResumen().subscribe({
-      next: (data) => {
+      next: (data: any) => {
         console.log('Resumen:', data);
 
-        this.totalEventos = data.totalEventos;
-        this.salonesDisponibles = data.salonesTotales;
+        this.totalEventos = data.totalEventos || 0;
+        this.salonesDisponibles = data.salonesTotales || 0;
+        this.ingresosEstimados = data.ingresos || 0; // 🔥 clave
       },
       error: (err) => {
         console.error('Error al obtener resumen', err);
